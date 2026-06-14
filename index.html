@@ -3,588 +3,524 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CBS AI Test</title>
+<title>GenAI i eksamen — CBS AI</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-  :root {
-    --bg: #F7F6F2;
-    --surface: #FFFFFF;
-    --border: rgba(0,0,0,0.08);
-    --border-strong: rgba(0,0,0,0.15);
-    --text: #1A1A18;
-    --muted: #6B6B66;
-    --hint: #A8A8A3;
-    --purple: #4B44C8;
-    --purple-light: #EEEDFE;
-    --purple-mid: #7F77DD;
-    --green: #1D9E75;
-    --green-light: #EAF3DE;
-    --green-dark: #27500A;
-    --amber: #BA7517;
-    --amber-light: #FAEEDA;
-    --amber-dark: #633806;
-    --red: #C0392B;
-    --red-light: #FCEBEB;
-    --red-dark: #791F1F;
-    --radius: 10px;
-    --radius-lg: 16px;
-    --radius-pill: 99px;
-  }
-
-  body {
-    font-family: 'Inter', sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    min-height: 100vh;
-    padding: 0;
-  }
-
-  /* HEADER */
-  header {
-    background: var(--surface);
-    border-bottom: 0.5px solid var(--border);
-    padding: 0 2rem;
-    height: 56px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    position: sticky;
-    top: 0;
-    z-index: 100;
-  }
-
-  .logo {
-    font-family: 'DM Mono', monospace;
-    font-size: 13px;
-    font-weight: 500;
-    color: var(--purple);
-    letter-spacing: 0.04em;
-  }
-
-  .logo span {
-    color: var(--hint);
-  }
-
-  .header-badge {
-    font-size: 11px;
-    font-weight: 500;
-    color: var(--muted);
-    background: var(--bg);
-    padding: 4px 10px;
-    border-radius: var(--radius-pill);
-    border: 0.5px solid var(--border-strong);
-    letter-spacing: 0.03em;
-  }
-
-  /* HERO */
-  .hero {
-    padding: 4rem 2rem 3rem;
-    max-width: 680px;
-    margin: 0 auto;
-  }
-
-  .hero-eyebrow {
-    font-family: 'DM Mono', monospace;
-    font-size: 11px;
-    font-weight: 500;
-    color: var(--purple);
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    margin-bottom: 1rem;
-  }
-
-  .hero h1 {
-    font-size: clamp(28px, 5vw, 40px);
-    font-weight: 600;
-    line-height: 1.15;
-    letter-spacing: -0.02em;
-    margin-bottom: 0.75rem;
-    color: var(--text);
-  }
-
-  .hero h1 em {
-    font-style: normal;
-    color: var(--purple);
-  }
-
-  .hero p {
-    font-size: 15px;
-    color: var(--muted);
-    line-height: 1.6;
-    max-width: 480px;
-  }
-
-  /* MAIN CARD */
-  .card {
-    background: var(--surface);
-    border: 0.5px solid var(--border);
-    border-radius: var(--radius-lg);
-    max-width: 680px;
-    margin: 0 auto 2rem;
-    overflow: hidden;
-  }
-
-  .card-section {
-    padding: 1.5rem 1.75rem;
-    border-bottom: 0.5px solid var(--border);
-  }
-
-  .card-section:last-child { border-bottom: none; }
-
-  .section-header {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin-bottom: 0.875rem;
-  }
-
-  .section-icon {
-    width: 22px;
-    height: 22px;
-    border-radius: 6px;
-    background: var(--purple-light);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-  }
-
-  .section-icon svg {
-    width: 13px;
-    height: 13px;
-    stroke: var(--purple);
-    fill: none;
-    stroke-width: 2;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-  }
-
-  .section-title {
-    font-size: 12px;
-    font-weight: 500;
-    color: var(--muted);
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-  }
-
-  /* CHIPS */
-  .chip-grid {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-  }
-
-  .chip {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    padding: 7px 14px;
-    border-radius: var(--radius-pill);
-    border: 1px solid var(--border-strong);
-    background: var(--bg);
-    color: var(--text);
-    font-size: 13.5px;
-    font-weight: 400;
-    cursor: pointer;
-    transition: all 0.15s ease;
-    user-select: none;
-    -webkit-tap-highlight-color: transparent;
-  }
-
-  .chip:hover {
-    border-color: var(--purple-mid);
-    background: var(--purple-light);
-    color: var(--purple);
-  }
-
-  .chip .dot {
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: currentColor;
-    opacity: 0;
-    transition: opacity 0.15s;
-    flex-shrink: 0;
-  }
-
-  .chip.selected .dot { opacity: 1; }
-
-  .chip.selected {
-    border-color: var(--purple);
-    background: var(--purple-light);
-    color: var(--purple);
-    font-weight: 500;
-  }
-
-  .chip.chip-warn.selected {
-    border-color: var(--amber);
-    background: var(--amber-light);
-    color: var(--amber-dark);
-  }
-
-  .chip.chip-warn.selected .dot { background: var(--amber); }
-
-  .chip.chip-stop {
-    border-style: dashed;
-  }
-
-  .chip.chip-stop.selected {
-    border-color: var(--red);
-    background: var(--red-light);
-    color: var(--red-dark);
-    border-style: solid;
-  }
-
-  .chip.chip-stop.selected .dot { background: var(--red); }
-
-  /* STEDPRØVE BANNER */
-  .alert {
-    display: none;
-    padding: 10px 14px;
-    border-radius: var(--radius);
-    font-size: 13px;
-    line-height: 1.5;
-    margin-top: 12px;
-    border: 1px solid;
-  }
-
-  .alert.show { display: block; }
-  .alert-red { background: var(--red-light); border-color: var(--red); color: var(--red-dark); }
-
-  .blocked {
-    opacity: 0.35;
-    pointer-events: none;
-    transition: opacity 0.3s;
-  }
-
-  /* RESULTS */
-  .results-section {
-    padding: 1.5rem 1.75rem;
-  }
-
-  .results-label {
-    font-size: 12px;
-    font-weight: 500;
-    color: var(--muted);
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-    margin-bottom: 1rem;
-  }
-
-  .results-empty {
-    font-size: 14px;
-    color: var(--hint);
-    padding: 0.5rem 0;
-  }
-
-  .result-cards { display: flex; flex-direction: column; gap: 10px; }
-
-  .result-card {
-    border-radius: var(--radius);
-    border: 1px solid;
-    overflow: hidden;
-    animation: slideIn 0.2s ease;
-  }
-
-  @keyframes slideIn {
-    from { opacity: 0; transform: translateY(4px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  .result-card-header {
-    padding: 10px 14px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-
-  .result-dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    flex-shrink: 0;
-  }
-
-  .result-card-title {
-    font-size: 13px;
-    font-weight: 600;
-    flex: 1;
-  }
-
-  .result-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 5px;
-    padding: 0 14px 10px;
-  }
-
-  .result-tag {
-    font-size: 11px;
-    font-weight: 500;
-    padding: 2px 8px;
-    border-radius: var(--radius-pill);
-  }
-
-  .result-body {
-    font-size: 13px;
-    line-height: 1.55;
-    padding: 0 14px 12px;
-  }
-
-  .result-body .item { margin-bottom: 6px; }
-  .result-body .item:last-child { margin-bottom: 0; }
-  .result-body strong { font-weight: 500; }
-
-  /* GREEN */
-  .result-green { background: var(--green-light); border-color: #3B6D11; }
-  .result-green .result-dot { background: var(--green); }
-  .result-green .result-card-title { color: var(--green-dark); }
-  .result-green .result-tag { background: #C0DD97; color: var(--green-dark); }
-  .result-green .result-body { color: #3B6D11; display: none; }
-
-  /* AMBER */
-  .result-amber { background: var(--amber-light); border-color: #854F0B; }
-  .result-amber .result-dot { background: var(--amber); }
-  .result-amber .result-card-title { color: var(--amber-dark); }
-  .result-amber .result-tag { background: #FAC775; color: var(--amber-dark); }
-  .result-amber .result-body { color: #854F0B; }
-
-  /* RED */
-  .result-red { background: var(--red-light); border-color: #A32D2D; }
-  .result-red .result-dot { background: var(--red); }
-  .result-red .result-card-title { color: var(--red-dark); }
-  .result-red .result-tag { background: #F7C1C1; color: var(--red-dark); }
-  .result-red .result-body { color: #791F1F; }
-
-  /* FOOTER */
-  footer {
-    max-width: 680px;
-    margin: 0 auto;
-    padding: 1.5rem 2rem 3rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 1rem;
-  }
-
-  .footer-left {
-    font-size: 12px;
-    color: var(--hint);
-    line-height: 1.5;
-  }
-
-  .footer-left a {
-    color: var(--purple);
-    text-decoration: none;
-  }
-
-  .footer-left a:hover { text-decoration: underline; }
-
-  .footer-tag {
-    font-family: 'DM Mono', monospace;
-    font-size: 11px;
-    color: var(--hint);
-    flex-shrink: 0;
-  }
-
-  /* RESPONSIVE */
-  @media (max-width: 600px) {
-    .hero { padding: 2.5rem 1.25rem 2rem; }
-    .card { margin: 0 1rem 1.5rem; }
-    .card-section, .results-section { padding: 1.25rem; }
-    footer { padding: 1rem 1.25rem 2rem; flex-direction: column; align-items: flex-start; gap: 0.5rem; }
-    header { padding: 0 1.25rem; }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    * { animation: none !important; transition: none !important; }
-  }
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --blue: #2D3FE0;
+  --blue-light: #EEF0FD;
+  --blue-dark: #1E2BA0;
+  --text: #111;
+  --sub: #555;
+  --hint: #999;
+  --line: #EBEBEB;
+  --bg: #F6F6F4;
+  --surface: #FFF;
+  --green-bg: #EDFAF4; --green-border: #1D9E75; --green-text: #0D5C40; --green-tag: #B6EDD6;
+  --amber-bg: #FEF6E4; --amber-border: #C98A00; --amber-text: #7A5000; --amber-tag: #FFE0A0;
+  --red-bg: #FEF0EF; --red-border: #D93025; --red-text: #8C1A13; --red-tag: #FBBFBB;
+  --r: 10px; --r-lg: 16px;
+}
+body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; -webkit-font-smoothing: antialiased; }
+ 
+/* HEADER */
+header { background: var(--surface); border-bottom: 1px solid var(--line); height: 56px; display: flex; align-items: center; padding: 0 24px; justify-content: space-between; position: sticky; top: 0; z-index: 100; }
+.logo { font-size: 14px; font-weight: 600; color: var(--text); display: flex; align-items: center; gap: 8px; }
+.logo-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--blue); }
+.header-pill { font-size: 11px; color: var(--hint); background: var(--bg); border: 1px solid var(--line); border-radius: 99px; padding: 3px 10px; }
+ 
+/* PROGRESS */
+.prog { height: 2px; background: var(--line); position: sticky; top: 56px; z-index: 99; }
+.prog-fill { height: 2px; background: var(--blue); transition: width 0.35s cubic-bezier(.4,0,.2,1); }
+ 
+/* SCREEN SYSTEM */
+.screen { display: none; min-height: calc(100vh - 58px); }
+.screen.on { display: flex; flex-direction: column; animation: rise 0.22s ease; }
+@keyframes rise { from { opacity:0; transform:translateY(6px) } to { opacity:1; transform:translateY(0) } }
+ 
+/* CENTERED WRAPPER */
+.center { flex: 1; display: flex; align-items: center; justify-content: center; padding: 32px 20px; }
+.card { background: var(--surface); border-radius: var(--r-lg); border: 1px solid var(--line); width: 100%; max-width: 480px; overflow: hidden; }
+.card-body { padding: 28px 28px 32px; }
+.card-footer-bar { padding: 16px 28px; border-top: 1px solid var(--line); background: var(--bg); display: flex; justify-content: space-between; align-items: center; }
+ 
+/* BACK */
+.back { background: none; border: none; font-size: 12px; color: var(--hint); cursor: pointer; display: flex; align-items: center; gap: 4px; padding: 0; transition: color 0.1s; }
+.back:hover { color: var(--sub); }
+ 
+/* STEP INDICATOR */
+.steps { display: flex; gap: 6px; }
+.step-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--line); transition: background 0.2s; }
+.step-dot.active { background: var(--blue); width: 18px; border-radius: 3px; }
+.step-dot.done { background: var(--blue); opacity: 0.3; }
+ 
+/* CARD HEADER */
+.eyebrow { font-size: 11px; font-weight: 600; color: var(--blue); letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 10px; }
+.card-title { font-size: 22px; font-weight: 600; line-height: 1.2; color: var(--text); margin-bottom: 6px; letter-spacing: -0.3px; }
+.card-sub { font-size: 14px; color: var(--sub); line-height: 1.6; margin-bottom: 24px; }
+ 
+/* WELCOME */
+.welcome-title { font-size: 28px; font-weight: 600; line-height: 1.15; letter-spacing: -0.5px; margin-bottom: 10px; }
+.welcome-title span { color: var(--blue); }
+.welcome-sub { font-size: 15px; color: var(--sub); line-height: 1.65; margin-bottom: 28px; }
+ 
+/* PRIMARY BTN */
+.btn { display: flex; align-items: center; justify-content: center; gap: 8px; background: var(--blue); color: #fff; font-size: 14px; font-weight: 500; padding: 13px 20px; border-radius: var(--r); border: none; cursor: pointer; width: 100%; transition: background 0.15s, transform 0.1s; }
+.btn:hover { background: var(--blue-dark); }
+.btn:active { transform: scale(0.99); }
+.btn:disabled { opacity: 0.35; cursor: not-allowed; transform: none; }
+.btn-ghost { background: transparent; color: var(--sub); border: 1px solid var(--line); }
+.btn-ghost:hover { background: var(--bg); }
+ 
+/* ROLE PILLS */
+.role-list { display: flex; flex-direction: column; gap: 6px; margin-bottom: 24px; }
+.role-btn { display: flex; align-items: center; gap: 12px; padding: 14px 16px; border: 1px solid var(--line); border-radius: var(--r); background: var(--bg); cursor: pointer; transition: all 0.12s; text-align: left; width: 100%; }
+.role-btn:hover { border-color: var(--blue); background: var(--blue-light); }
+.role-icon { font-size: 20px; flex-shrink: 0; }
+.role-text { flex: 1; }
+.role-name { font-size: 14px; font-weight: 500; color: var(--text); }
+.role-desc { font-size: 12px; color: var(--hint); margin-top: 1px; }
+.role-arrow { color: var(--hint); font-size: 16px; }
+ 
+/* EXAM TYPE LIST */
+.choice-list { display: flex; flex-direction: column; gap: 6px; }
+.choice-btn { display: flex; align-items: center; gap: 12px; padding: 14px 16px; border: 1px solid var(--line); border-radius: var(--r); background: var(--bg); cursor: pointer; transition: all 0.12s; text-align: left; width: 100%; }
+.choice-btn:hover { border-color: var(--blue); background: var(--blue-light); }
+.choice-btn.warn:hover { border-color: var(--amber-border); background: var(--amber-bg); }
+.choice-label { font-size: 14px; font-weight: 500; color: var(--text); }
+.choice-desc { font-size: 12px; color: var(--hint); margin-top: 2px; }
+.choice-arrow { margin-left: auto; color: var(--hint); }
+ 
+.sep { display: flex; align-items: center; gap: 10px; margin: 14px 0 10px; }
+.sep-line { flex: 1; height: 1px; background: var(--line); }
+.sep-text { font-size: 11px; color: var(--hint); white-space: nowrap; }
+ 
+/* CHIPS */
+.chip-grid { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 28px; }
+.chip { display: inline-flex; align-items: center; gap: 6px; padding: 8px 14px; border: 1px solid var(--line); border-radius: 99px; background: var(--bg); font-size: 13px; color: var(--text); cursor: pointer; transition: all 0.12s; user-select: none; }
+.chip .dot { width: 5px; height: 5px; border-radius: 50%; background: currentColor; opacity: 0; transition: opacity 0.12s; }
+.chip:hover { border-color: var(--blue); background: var(--blue-light); color: var(--blue); }
+.chip.on { border-color: var(--blue); background: var(--blue-light); color: var(--blue); font-weight: 500; }
+.chip.on .dot { opacity: 1; }
+.chip.warn:hover { border-color: var(--amber-border); background: var(--amber-bg); color: var(--amber-text); }
+.chip.warn.on { border-color: var(--amber-border); background: var(--amber-bg); color: var(--amber-text); }
+.chip.warn.on .dot { background: var(--amber-border); }
+.chip.stop { border-style: dashed; }
+.chip.stop:hover, .chip.stop.on { border-style: solid; border-color: var(--red-border); background: var(--red-bg); color: var(--red-text); }
+.chip.stop.on .dot { background: var(--red-border); }
+ 
+/* ALERT */
+.alert { padding: 12px 14px; border-radius: var(--r); font-size: 13px; line-height: 1.6; border: 1px solid; margin-bottom: 14px; }
+.alert-red { background: var(--red-bg); border-color: var(--red-border); color: var(--red-text); }
+.alert-blue { background: var(--blue-light); border-color: var(--blue); color: var(--blue-dark); }
+.alert-amber { background: var(--amber-bg); border-color: var(--amber-border); color: var(--amber-text); display: flex; gap: 10px; }
+ 
+/* RESULTS */
+.result-block { border-radius: var(--r); border: 1px solid; overflow: hidden; margin-bottom: 10px; }
+.result-head { padding: 10px 14px; display: flex; align-items: center; gap: 8px; }
+.result-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+.result-head-label { font-size: 11px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; }
+.result-tags { padding: 0 14px 10px; display: flex; flex-wrap: wrap; gap: 5px; }
+.result-tag { font-size: 11px; font-weight: 500; padding: 3px 9px; border-radius: 99px; }
+.result-items { padding: 0 14px 14px; font-size: 13px; line-height: 1.6; }
+.result-item { padding-bottom: 9px; margin-bottom: 9px; border-bottom: 1px solid rgba(0,0,0,0.05); }
+.result-item:last-child { padding-bottom: 0; margin-bottom: 0; border-bottom: none; }
+.result-item strong { font-weight: 600; display: block; margin-bottom: 1px; }
+ 
+.rg { background: var(--green-bg); border-color: var(--green-border); }
+.rg .result-dot { background: var(--green-border); }
+.rg .result-head-label { color: var(--green-text); }
+.rg .result-tag { background: var(--green-tag); color: var(--green-text); }
+ 
+.ra { background: var(--amber-bg); border-color: var(--amber-border); }
+.ra .result-dot { background: var(--amber-border); }
+.ra .result-head-label { color: var(--amber-text); }
+.ra .result-tag { background: var(--amber-tag); color: var(--amber-text); }
+.ra .result-items { color: var(--amber-text); }
+ 
+.rr { background: var(--red-bg); border-color: var(--red-border); }
+.rr .result-dot { background: var(--red-border); }
+.rr .result-head-label { color: var(--red-text); }
+.rr .result-tag { background: var(--red-tag); color: var(--red-text); }
+.rr .result-items { color: var(--red-text); }
+ 
+/* ALWAYS RULES */
+.always-label { font-size: 11px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--hint); margin: 20px 0 8px; }
+.rule { padding: 10px 0; border-bottom: 1px solid var(--line); font-size: 13px; color: var(--sub); line-height: 1.55; display: flex; gap: 10px; }
+.rule:last-child { border-bottom: none; }
+.rule strong { color: var(--text); font-weight: 500; display: block; margin-bottom: 1px; }
+ 
+/* UNDERVISER CARDS */
+.wide-card { background: var(--surface); border-radius: var(--r-lg); border: 1px solid var(--line); max-width: 680px; width: 100%; }
+.wide-card-head { padding: 24px 28px 0; }
+.role-section { padding: 20px 28px; border-bottom: 1px solid var(--line); }
+.role-section:last-child { border-bottom: none; }
+.role-section-title { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+.role-rule-list { display: flex; flex-direction: column; gap: 6px; }
+.role-rule-item { display: flex; gap: 10px; font-size: 13px; color: var(--sub); line-height: 1.5; }
+.role-rule-item::before { content: '—'; color: var(--line); flex-shrink: 0; margin-top: 1px; }
+ 
+/* FOOTER */
+footer { padding: 20px 24px; border-top: 1px solid var(--line); font-size: 12px; color: var(--hint); text-align: center; line-height: 1.6; display: none; }
+footer a { color: var(--blue); text-decoration: none; }
+footer a:hover { text-decoration: underline; }
+footer.on { display: block; }
+ 
+@media (max-width: 540px) {
+  .card-body { padding: 22px 20px 26px; }
+  .card-footer-bar { padding: 14px 20px; }
+}
+@media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
 </style>
 </head>
 <body>
-
+ 
 <header>
-  <div class="logo">CBS <span>/</span> AI TEST</div>
-  <div class="header-badge">GenAI-retningslinjer 2025/26</div>
+  <div class="logo"><div class="logo-dot"></div>CBS AI</div>
+  <div class="header-pill">GenAI-guide 2025/26</div>
 </header>
-
-<main style="padding: 0 1rem;">
-
-  <div class="hero">
-    <div class="hero-eyebrow">CBS AI Society</div>
-    <h1>Må du bruge <em>GenAI</em><br>til din eksamen?</h1>
-    <p>Vælg alle de ting du vil bruge GenAI til — så får du et samlet overblik over hvad reglerne siger.</p>
+<div class="prog"><div class="prog-fill" id="bar" style="width:0%"></div></div>
+ 
+<!-- ─────────── S0: LANDING ─────────── -->
+<div class="screen on" id="s0">
+  <div class="center">
+    <div class="card">
+      <div class="card-body">
+        <div class="eyebrow">CBS AI</div>
+        <h1 class="welcome-title">Hvem er du, og hvad har du brug for?</h1>
+        <p class="welcome-sub">Vælg din rolle, så guider vi dig til de relevante regler.</p>
+        <div class="role-list">
+          <button class="role-btn" onclick="setRole('studerende')">
+            <span class="role-icon">🎓</span>
+            <div class="role-text">
+              <div class="role-name">Studerende</div>
+              <div class="role-desc">Hvad må jeg bruge GenAI til ved eksamen?</div>
+            </div>
+            <span class="role-arrow">›</span>
+          </button>
+          <button class="role-btn" onclick="setRole('underviser')">
+            <span class="role-icon">📚</span>
+            <div class="role-text">
+              <div class="role-name">Underviser, vejleder eller bedømmer</div>
+              <div class="role-desc">Hvad skal jeg være opmærksom på?</div>
+            </div>
+            <span class="role-arrow">›</span>
+          </button>
+        </div>
+      </div>
+    </div>
   </div>
-
-  <div class="card">
-
-    <!-- STEDPRØVE -->
-    <div class="card-section">
-      <div class="section-header">
-        <div class="section-icon">
-          <svg viewBox="0 0 24 24"><path d="M12 9v4m0 4h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/></svg>
-        </div>
-        <span class="section-title">Eksamentype</span>
+</div>
+ 
+<!-- ─────────── S0B: MELLЕМLED ─────────── -->
+<div class="screen" id="s0b">
+  <div class="center">
+    <div class="card">
+      <div class="card-body">
+        <div class="eyebrow">Studerende</div>
+        <h2 class="welcome-title" style="margin-bottom:12px">Du er ikke den eneste der synes det er svært.</h2>
+        <p class="welcome-sub" style="margin-bottom:0">CBS' regler for GenAI kan være svære at navigere i — hvad kræver deklaration, hvad er forbudt, og hvornår er det egentlig okay?<br><br>På næste side vælger du din eksamentype og hvad du vil bruge GenAI til. Så får du et klart overblik over præcis hvad reglerne siger for din situation.</p>
       </div>
-      <div class="chip-grid">
-        <div class="chip chip-stop" id="chip-stedproeve" onclick="toggle('stedproeve')">
-          <span class="dot"></span>
-          Skriftlig stedprøve i lokalet
-        </div>
-      </div>
-      <div class="alert alert-red" id="alert-stedproeve">
-        GenAI er ikke tilladt ved skriftlige stedprøver — uanset om det er med eller uden hjælpemidler.
+      <div class="card-footer-bar">
+        <button class="back" onclick="goTo('s0')">← Tilbage</button>
+        <button class="btn" style="width:auto;padding:10px 20px" onclick="goTo('s1')">Kom i gang →</button>
       </div>
     </div>
-
-    <!-- SKRIFTLIG -->
-    <div class="card-section" id="section-skriftlig">
-      <div class="section-header">
-        <div class="section-icon">
-          <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14,2 14,8 20,8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10,9 9,9 8,9"/></svg>
-        </div>
-        <span class="section-title">Skriftlig eksamen / aflevering</span>
-      </div>
-      <div class="chip-grid">
-        <div class="chip" id="chip-korrektur" onclick="toggle('korrektur')">
-          <span class="dot"></span>Stave- og grammatikkontrol
-        </div>
-        <div class="chip" id="chip-search" onclick="toggle('search')">
-          <span class="dot"></span>Søgemaskine / research
-        </div>
-        <div class="chip chip-warn" id="chip-ideer" onclick="toggle('ideer')">
-          <span class="dot"></span>Idéer og struktur
-        </div>
-        <div class="chip chip-warn" id="chip-output" onclick="toggle('output')">
-          <span class="dot"></span>Generere tekst eller billeder
-        </div>
-      </div>
-    </div>
-
-    <!-- MUNDTLIG -->
-    <div class="card-section" id="section-mundtlig">
-      <div class="section-header">
-        <div class="section-icon">
-          <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
-        </div>
-        <span class="section-title">Mundtlig eksamen</span>
-      </div>
-      <div class="chip-grid">
-        <div class="chip" id="chip-sparring" onclick="toggle('sparring')">
-          <span class="dot"></span>Brainstorm / sparring
-        </div>
-        <div class="chip chip-warn" id="chip-slides" onclick="toggle('slides')">
-          <span class="dot"></span>Lave slides eller produkt
-        </div>
-        <div class="chip chip-stop" id="chip-live" onclick="toggle('live')">
-          <span class="dot"></span>Svar live under eksamen
-        </div>
-      </div>
-    </div>
-
-    <!-- RESULTS -->
-    <div class="results-section">
-      <div class="results-label">Dit overblik</div>
-      <div id="results"><div class="results-empty">Vælg en eller flere use cases ovenfor.</div></div>
-    </div>
-
   </div>
-
-</main>
-
-<footer>
-  <div class="footer-left">
-    Baseret på CBS' officielle retningslinjer for GenAI i eksamen (2025/26).<br>
-    Tvivl? Kontakt <a href="https://library.cbs.dk" target="_blank">CBS Library</a> eller din studievejleder.
+</div>
+ 
+<!-- ─────────── S1: EKSAMENTYPE (studerende) ─────────── -->
+<div class="screen" id="s1">
+  <div class="center">
+    <div class="card">
+      <div class="card-body">
+        <div class="eyebrow">Trin 1 af 3</div>
+        <h2 class="card-title">Hvilken slags eksamen?</h2>
+        <p class="card-sub">Vælg den type der passer til din situation.</p>
+        <div class="choice-list">
+          <button class="choice-btn" onclick="setExam('skriftlig')">
+            <div><div class="choice-label">Skriftlig aflevering</div><div class="choice-desc">Hjemmeopgave, projektrapport eller lignende kursusopgave</div></div>
+            <span class="choice-arrow">›</span>
+          </button>
+          <button class="choice-btn" onclick="setExam('afgang')">
+            <div><div class="choice-label">Bachelor eller kandidatafhandling</div><div class="choice-desc">Bachelorprojekt, speciale, diplom- eller executive masterprojekt</div></div>
+            <span class="choice-arrow">›</span>
+          </button>
+          <button class="choice-btn" onclick="setExam('mundtlig')">
+            <div><div class="choice-label">Mundtlig eksamen</div><div class="choice-desc">Mundtlig præsentation eller forsvar</div></div>
+            <span class="choice-arrow">›</span>
+          </button>
+          <button class="choice-btn warn" onclick="setExam('stedproeve')">
+            <div><div class="choice-label">Skriftlig stedprøve</div><div class="choice-desc">Eksamination i lokalet, med eller uden hjælpemidler</div></div>
+            <span class="choice-arrow">›</span>
+          </button>
+        </div>
+        <div class="sep"><div class="sep-line"></div><div class="sep-text">Særlig situation</div><div class="sep-line"></div></div>
+        <div class="choice-list">
+          <button class="choice-btn warn" onclick="setExam('kursusforbudt')">
+            <div><div class="choice-label">Kurset har forbudt GenAI</div><div class="choice-desc">Det fremgår eksplicit af kursusbeskrivelsen</div></div>
+            <span class="choice-arrow">›</span>
+          </button>
+        </div>
+      </div>
+      <div class="card-footer-bar">
+        <button class="back" onclick="goTo('s0')">← Tilbage</button>
+        <div class="steps"><div class="step-dot done"></div><div class="step-dot active"></div><div class="step-dot"></div></div>
+      </div>
+    </div>
   </div>
-  <div class="footer-tag">CBS AI Society</div>
+</div>
+ 
+<!-- ─────────── S2: BRUG ─────────── -->
+<div class="screen" id="s2">
+  <div class="center">
+    <div class="card">
+      <div class="card-body" id="s2-body"></div>
+      <div class="card-footer-bar">
+        <button class="back" onclick="goTo('s1')">← Tilbage</button>
+        <div class="steps"><div class="step-dot done"></div><div class="step-dot done"></div><div class="step-dot active"></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+ 
+<!-- ─────────── S3: RESULTAT ─────────── -->
+<div class="screen" id="s3">
+  <div class="center" style="padding-top:24px;padding-bottom:40px">
+    <div class="card" style="max-width:520px">
+      <div class="card-body">
+        <div class="eyebrow">Dit overblik</div>
+        <h2 class="card-title">Her er hvad reglerne siger</h2>
+        <div id="result-out" style="margin-top:20px"></div>
+        <div class="always-label">Gælder altid</div>
+        <div class="rule"><div><strong>Ingen persondata i GenAI</strong>Brug CBS' egne GDPR-sikre værktøjer — fx <a href="https://teach.cbs.dk/ai/copilot-guide/" target="_blank" style="color:var(--blue)">Copilot</a> — ved følsomme oplysninger.</div></div>
+        <div class="rule"><div><strong>Tjek kursusbeskrivelsen</strong>Regler fra ét kursus gælder ikke automatisk for et andet. Dit ansvar.</div></div>
+        <div class="rule"><div><strong>Du er ansvarlig</strong>Bedømmere skal altid kunne skelne dit bidrag fra AI-genereret indhold.</div></div>
+        <div class="rule"><div><strong>Karakteren påvirkes ikke</strong>Korrekt deklareret GenAI-brug må ikke i sig selv trække ned i karakter.</div></div>
+        <div class="rule"><div><strong>Stadig i tvivl?</strong>Kontakt <a href="https://library.cbs.dk" target="_blank" style="color:var(--blue)">CBS Library</a> om citering eller din studievejleder om kursusregler.</div></div>
+      </div>
+      <div class="card-footer-bar">
+        <button class="back" onclick="restart()">↩ Start forfra</button>
+        <div class="steps"><div class="step-dot done"></div><div class="step-dot done"></div><div class="step-dot done"></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+ 
+<!-- ─────────── S4: ROLLEVELGER ─────────── -->
+<div class="screen" id="s4">
+  <div class="center">
+    <div class="card">
+      <div class="card-body">
+        <div class="eyebrow">Undervisere, vejledere og bedømmere</div>
+        <h2 class="card-title">Hvad er din rolle?</h2>
+        <p class="card-sub">Vælg din rolle for at se det der er relevant for dig.</p>
+        <div class="role-list">
+          <button class="role-btn" onclick="showRole('underviser')">
+            <span class="role-icon">📚</span>
+            <div class="role-text"><div class="role-name">Underviser</div><div class="role-desc">Kursusansvarlig eller forelæser</div></div>
+            <span class="role-arrow">›</span>
+          </button>
+          <button class="role-btn" onclick="showRole('vejleder')">
+            <span class="role-icon">🗂</span>
+            <div class="role-text"><div class="role-name">Vejleder</div><div class="role-desc">Vejleder på afgangsprojekt eller speciale</div></div>
+            <span class="role-arrow">›</span>
+          </button>
+          <button class="role-btn" onclick="showRole('bedommer')">
+            <span class="role-icon">✅</span>
+            <div class="role-text"><div class="role-name">Bedømmer</div><div class="role-desc">Underviser eller vejleder der bedømmer eksamener</div></div>
+            <span class="role-arrow">›</span>
+          </button>
+          <button class="role-btn" onclick="showRole('censor')">
+            <span class="role-icon">📋</span>
+            <div class="role-text"><div class="role-name">Censor</div><div class="role-desc">Ekstern censor ved eksamen</div></div>
+            <span class="role-arrow">›</span>
+          </button>
+        </div>
+      </div>
+      <div class="card-footer-bar">
+        <button class="back" onclick="goTo('s0')">← Tilbage</button>
+      </div>
+    </div>
+  </div>
+</div>
+ 
+<!-- ─────────── S5: ROLLE-INDHOLD ─────────── -->
+<div class="screen" id="s5">
+  <div class="center">
+    <div class="card" style="max-width:500px">
+      <div class="card-body" id="s5-body"></div>
+      <div class="card-footer-bar">
+        <button class="back" onclick="goTo('s4')">← Tilbage</button>
+      </div>
+    </div>
+  </div>
+</div>
+ 
+<footer id="foot">
+  Baseret på CBS' officielle retningslinjer for GenAI i eksamen (2025/26). &nbsp;·&nbsp;
+  <a href="https://library.cbs.dk/generativ-kunstig-intelligens" target="_blank">CBS Library's guide</a>
 </footer>
-
+ 
 <script>
-const state = {};
-
 const rules = {
-  stedproeve: { color: 'red', title: 'Skriftlig stedprøve', body: 'Ikke tilladt. GenAI er forbudt ved alle skriftlige stedprøver i eksamenslokalet — uanset om det er med eller uden hjælpemidler.' },
-  korrektur:  { color: 'green', title: 'Korrekturlæsning', body: '' },
-  search:     { color: 'green', title: 'Søgemaskine / research', body: '' },
-  ideer:      { color: 'amber', title: 'Idéer og struktur', body: 'Angiv brugen i metodeafsnittet eller introduktionen — hvad du brugte det til og til hvilket formål.' },
-  output:     { color: 'amber', title: 'Generere tekst eller billeder', body: 'Kræver en specifik APA-reference for hvert stykke AI-genereret indhold i afleveringen. Ingen reference = brud på reglerne om akademisk redelighed.' },
-  sparring:   { color: 'green', title: 'Brainstorm / sparring', body: '' },
-  slides:     { color: 'amber', title: 'Slides eller produkt', body: 'Erklær din brug tydeligt — mundtligt under eksamen eller skriftligt i produktet (f.eks. en note på første slide).' },
-  live:       { color: 'red',   title: 'Svar live under eksamen', body: 'Ikke tilladt. GenAI må ikke generere dine svar under selve den mundtlige eksamen.' }
+  korrektur: { c:'g', t:'Korrekturlæsning', b:'Ingen deklaration nødvendig. Dækker stavning, grammatik, tegnsætning og formatering.' },
+  search:    { c:'g', t:'Søgemaskine / research', b:'Ingen deklaration nødvendig. Brug som Google.' },
+  sparring:  { c:'g', t:'Brainstorm og sparring', b:'Ingen deklaration nødvendig. Gælder idéer, begrebsafklaring og informationssøgning til forberedelse.' },
+  ideer:     { c:'a', t:'Idéer, struktur og konceptualisering', b:'Angiv i afsnittet "Metodologi". Har afleveringen ikke et metodeafsnit, nævnes det i introduktionen.' },
+  output:    { c:'a', t:'Generere tekst, billeder eller andet output', b:'Kræver specifik APA-reference for hvert stykke AI-genereret indhold. Ingen reference = overtrædelse af CBS\' regler om akademisk redelighed.' },
+  slides:    { c:'a', t:'Slides eller håndgribeligt produkt', b:'Erklær tydeligt — mundtligt under eksamen eller skriftligt i produktet (fx en note på første slide).' },
+  live:      { c:'r', t:'Svar live under eksamen', b:'Ikke tilladt. GenAI må ikke generere dine svar under selve den mundtlige eksamen.' },
+  stedproeve:    { c:'r', t:'Skriftlig stedprøve', b:'Ikke tilladt. GenAI er forbudt ved alle skriftlige stedprøver — uanset hjælpemidler.' },
+  kursusforbudt: { c:'r', t:'Kursus har forbudt GenAI', b:'Ikke tilladt i kurset. Bemærk: bachelorprojekter og kandidatafhandlinger kan aldrig forbyde GenAI.' },
 };
-
-function toggle(id) {
-  state[id] = !state[id];
-  const chip = document.getElementById('chip-' + id);
-  chip.classList.toggle('selected', state[id]);
-
-  if (id === 'stedproeve') {
-    document.getElementById('alert-stedproeve').classList.toggle('show', state[id]);
-    document.getElementById('section-skriftlig').classList.toggle('blocked', state[id]);
-    document.getElementById('section-mundtlig').classList.toggle('blocked', state[id]);
-    if (state[id]) {
-      ['korrektur','search','ideer','output','sparring','slides','live'].forEach(k => {
-        state[k] = false;
-        document.getElementById('chip-' + k).classList.remove('selected');
-      });
-    }
+ 
+let examType = null, sel = new Set();
+const progMap = { s0:0, s0b:10, s1:25, s2:60, s3:100, s4:50, s5:100 };
+ 
+const roleContent = {
+  underviser: {
+    icon: '📚', title: 'Underviser',
+    items: [
+      'Afstem forventninger med studerende om GenAI-brug i kurset og til eksamen — gerne fra første undervisningsgang.',
+      'Vil du forbyde GenAI, skal det fremgå <em>eksplicit</em> af kursusbeskrivelsen. Ellers er GenAI tilladt som udgangspunkt.',
+      'Bemærk: afgangsprojekter (bachelor, kandidat m.fl.) kan ikke forbyde GenAI — kun kurser kan.',
+      'Tilskynd studerende til at balancere GenAI med andre ressourcer og til kritisk evaluering af AI-output.',
+      'Henvis studerende til <a href="https://library.cbs.dk/generativ-kunstig-intelligens" target="_blank" style="color:var(--blue)">CBS Library\'s guide</a> for korrekt citering og deklaration.',
+      'Overvej løbende etiske spørgsmål: databeskyttelse, ophavsret, bias og risiko for unøjagtigt output.',
+    ]
+  },
+  vejleder: {
+    icon: '🗂', title: 'Vejleder',
+    items: [
+      'Drøft potentiel GenAI-brug med den studerende tidligt i vejledningsforløbet — ikke når afleveringen nærmer sig.',
+      'Afgangsprojekter (bachelor, kandidat, diplom, executive master) kan <em>ikke</em> forbyde GenAI.',
+      'Tilskynd til balance mellem GenAI og andre ressourcer, og til kritisk evaluering af AI-genereret output.',
+      'Henvis til <a href="https://library.cbs.dk/generativ-kunstig-intelligens" target="_blank" style="color:var(--blue)">CBS Library\'s guide</a> for korrekt citering og deklaration i skriftlige produkter.',
+      'Adresser etiske spørgsmål om databeskyttelse, ophavsret og bias løbende gennem hele projektet.',
+    ]
+  },
+  bedommer: {
+    icon: '✅', title: 'Bedømmer',
+    items: [
+      'Tjek at reglerne for deklaration og APA-citering er overholdt — se <a href="https://library.cbs.dk/generativ-kunstig-intelligens" target="_blank" style="color:var(--blue)">CBS Library\'s guide</a>.',
+      'Korrekt deklareret GenAI-brug må <em>ikke</em> i sig selv påvirke karakteren negativt. Produktet bedømmes på læringsmålene.',
+      'Mistanke om udokumenteret AI-output? Anmeld det til CBS Legal — baseret på grundig gennemgang og argumentation.',
+      'Der findes ingen pålidelige automatiske detektionsværktøjer for AI-genereret indhold.',
+    ]
+  },
+  censor: {
+    icon: '📋', title: 'Censor',
+    items: [
+      'CBS orienterer censorer om de gældende regler via Censorinformation inden eksamen.',
+      'Tjek at den studerendes erklæring om GenAI-brug er tilgængelig i Digital Eksamen og forklaret i Metode- eller Introduktionsafsnittet.',
+      'Deklareret GenAI-brug må ikke i sig selv trække ned i karakter — produktet bedømmes på læringsmålene.',
+      'Læs kursusbeskrivelsen og tal om muligt med underviser/vejleder om GenAI-brugen i kurset.',
+    ]
   }
-
-  render();
+};
+ 
+function showRole(role) {
+  const r = roleContent[role];
+  document.getElementById('s5-body').innerHTML = `
+    <div class="eyebrow">${r.icon} ${r.title}</div>
+    <h2 class="card-title" style="margin-bottom:20px">Det skal du vide</h2>
+    <div style="display:flex;flex-direction:column;gap:0">
+      ${r.items.map((item, i) => `
+        <div style="display:flex;gap:12px;padding:12px 0;border-bottom:1px solid var(--line);font-size:13px;color:var(--sub);line-height:1.6;${i===r.items.length-1?'border-bottom:none':''}">
+          <div style="width:20px;height:20px;border-radius:50%;background:var(--blue-light);color:var(--blue);font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px">${i+1}</div>
+          <div>${item}</div>
+        </div>`).join('')}
+    </div>
+    <div style="margin-top:16px;padding:12px 14px;border-radius:var(--r);background:var(--blue-light);font-size:12px;color:var(--blue-dark);line-height:1.6">
+      Fuld dokumentation: <a href="https://library.cbs.dk/generativ-kunstig-intelligens" target="_blank" style="color:var(--blue);font-weight:500">CBS Library's guide til GenAI-citering (APA)</a>
+    </div>`;
+  goTo('s5');
 }
-
-function render() {
-  const el = document.getElementById('results');
-  const active = Object.keys(state).filter(k => state[k] && k !== 'stedproeve');
-
-  if (!active.length && !state.stedproeve) {
-    el.innerHTML = '<div class="results-empty">Vælg en eller flere use cases ovenfor.</div>';
-    return;
+ 
+function goTo(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('on'));
+  document.getElementById(id).classList.add('on');
+  window.scrollTo({ top:0, behavior:'smooth' });
+  document.getElementById('bar').style.width = progMap[id] + '%';
+  document.getElementById('foot').classList.toggle('on', id === 's3' || id === 's5');
+}
+ 
+function setRole(r) { r === 'studerende' ? goTo('s0b') : goTo('s4'); }
+ 
+function setExam(type) {
+  examType = type; sel.clear();
+  const b = document.getElementById('s2-body');
+ 
+  if (type === 'stedproeve') {
+    sel.add('stedproeve');
+    b.innerHTML = `
+      <div class="eyebrow">Trin 2 af 3</div>
+      <h2 class="card-title" style="margin-bottom:16px">Skriftlig stedprøve</h2>
+      <div class="alert alert-red"><strong>Ikke tilladt.</strong> GenAI er forbudt ved alle skriftlige stedprøver i eksamenslokalet — uanset om det er med eller uden hjælpemidler.</div>
+      <button class="btn" style="margin-top:8px" onclick="showResult()">Se mit overblik →</button>`;
+    goTo('s2'); return;
   }
-
-  const order = { red: 0, amber: 1, green: 2 };
-  const keys = state.stedproeve ? ['stedproeve'] : active;
-  keys.sort((a, b) => order[rules[a].color] - order[rules[b].color]);
-
-  const byColor = { red: [], amber: [], green: [] };
-  keys.forEach(k => byColor[rules[k].color].push(k));
-
-  const colorMeta = {
-    red:   { label: 'Ikke tilladt', cls: 'result-red' },
-    amber: { label: 'Deklaration kræves', cls: 'result-amber' },
-    green: { label: 'Ingen deklaration', cls: 'result-green' }
-  };
-
-  let html = '<div class="result-cards">';
-
-  ['red', 'amber', 'green'].forEach(color => {
-    const items = byColor[color];
-    if (!items.length) return;
-    const meta = colorMeta[color];
-
-    html += `<div class="result-card ${meta.cls}">`;
-    html += `<div class="result-card-header"><div class="result-dot"></div><div class="result-card-title">${meta.label}</div></div>`;
-    html += `<div class="result-tags">${items.map(k => `<span class="result-tag">${rules[k].title}</span>`).join('')}</div>`;
-
-    const withBody = items.filter(k => rules[k].body);
-    if (withBody.length) {
-      html += `<div class="result-body">`;
-      withBody.forEach(k => {
-        html += `<div class="item"><strong>${rules[k].title}:</strong> ${rules[k].body}</div>`;
-      });
-      html += `</div>`;
-    }
-
+ 
+  if (type === 'kursusforbudt') {
+    sel.add('kursusforbudt');
+    b.innerHTML = `
+      <div class="eyebrow">Trin 2 af 3</div>
+      <h2 class="card-title" style="margin-bottom:16px">Kurset har forbudt GenAI</h2>
+      <div class="alert alert-red"><strong>Ikke tilladt.</strong> Hvis kursusbeskrivelsen eksplicit forbyder GenAI, gælder det for alle formål i kurset.</div>
+      <div class="alert alert-amber">
+        <span style="font-size:16px;flex-shrink:0">⚠</span>
+        <div><strong style="display:block;margin-bottom:2px">Skriver du bachelor eller kandidat?</strong>Afgangsprojekter kan ikke forbyde GenAI — uanset hvad der måtte stå. Spørg din vejleder.</div>
+      </div>
+      <button class="btn" onclick="showResult()">Se mit overblik →</button>`;
+    goTo('s2'); return;
+  }
+ 
+  const afg = type === 'afgang';
+  const chips = type === 'mundtlig'
+    ? [{ k:'sparring', l:'Brainstorm, begrebsafklaring og sparring', cls:'' }, { k:'slides', l:'Lave slides eller håndgribeligt produkt', cls:'warn' }, { k:'live', l:'Generere svar live under selve eksamen', cls:'stop' }]
+    : [{ k:'korrektur', l:'Stavning, grammatik og formatering', cls:'' }, { k:'search', l:'Søgemaskine / research', cls:'' }, { k:'ideer', l:'Idéer, struktur og konceptualisering', cls:'warn' }, { k:'output', l:'Generere tekst, billeder eller andet output', cls:'warn' }];
+ 
+  b.innerHTML = `
+    <div class="eyebrow">Trin 2 af 3</div>
+    <h2 class="card-title" style="margin-bottom:${afg?'12px':'6px'}">Hvad bruger du GenAI til?</h2>
+    ${afg ? `<div class="alert alert-blue" style="margin-bottom:16px">Dit afgangsprojekt kan <strong>ikke forbydes GenAI</strong> — uanset hvad der måtte stå i projektbeskrivelsen.</div>` : `<p class="card-sub">Vælg alt der gælder for dig.</p>`}
+    <div class="chip-grid">${chips.map(c=>`<div class="chip ${c.cls}" data-k="${c.k}" onclick="tap(this)"><span class="dot"></span>${c.l}</div>`).join('')}</div>
+    <button class="btn" id="cta" onclick="showResult()" disabled>Se mit overblik →</button>`;
+  goTo('s2');
+}
+ 
+function tap(el) {
+  const k = el.dataset.k;
+  el.classList.toggle('on');
+  el.classList.contains('on') ? sel.add(k) : sel.delete(k);
+  document.getElementById('cta').disabled = sel.size === 0;
+}
+ 
+function showResult() {
+  const out = document.getElementById('result-out');
+  const active = [...sel].sort((a,b) => ({r:0,a:1,g:2}[rules[a].c] - {r:0,a:1,g:2}[rules[b].c]));
+  const by = { r:[], a:[], g:[] };
+  active.forEach(k => by[rules[k].c].push(k));
+  const m = { r:{l:'Ikke tilladt',cls:'rr'}, a:{l:'Kræver deklaration',cls:'ra'}, g:{l:'Ingen deklaration nødvendig',cls:'rg'} };
+  let html = '';
+  ['r','a','g'].forEach(c => {
+    if (!by[c].length) return;
+    html += `<div class="result-block ${m[c].cls}">`;
+    html += `<div class="result-head"><div class="result-dot"></div><div class="result-head-label">${m[c].l}</div></div>`;
+    html += `<div class="result-tags">${by[c].map(k=>`<span class="result-tag">${rules[k].t}</span>`).join('')}</div>`;
+    const wb = by[c].filter(k=>rules[k].b);
+    if (wb.length) { html += `<div class="result-items">${wb.map(k=>`<div class="result-item"><strong>${rules[k].t}</strong>${rules[k].b}</div>`).join('')}</div>`; }
     html += `</div>`;
   });
-
-  html += '</div>';
-  el.innerHTML = html;
+  out.innerHTML = html;
+  goTo('s3');
 }
+ 
+function restart() { examType=null; sel.clear(); goTo('s0'); }
 </script>
 </body>
 </html>
+ 
