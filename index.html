@@ -185,12 +185,16 @@ footer.on { display: block; }
  
 <!-- ─────────── S0: LANDING ─────────── -->
 <div class="screen on" id="s0">
-  <div class="center">
-    <div class="card">
-      <div class="card-body">
-        <div class="eyebrow">CBS AI</div>
-        <h1 class="welcome-title">Hvem er du, og hvad har du brug for?</h1>
-        <p class="welcome-sub">Vælg din rolle, så guider vi dig til de relevante regler.</p>
+  <div class="center" style="align-items:center;padding:32px 20px">
+    <div class="card" style="max-width:480px">
+      <div style="background:var(--blue);padding:32px 28px 28px;border-radius:var(--r-lg) var(--r-lg) 0 0">
+        <div style="font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.5);margin-bottom:14px">CBS AI</div>
+        <h1 style="font-size:26px;font-weight:600;line-height:1.2;letter-spacing:-0.4px;color:#fff;margin-bottom:10px">Forstå CBS' regler for <span style="color:#FFD166">GenAI</span> i eksamen</h1>
+        <p style="font-size:14px;color:rgba(255,255,255,0.65);line-height:1.65;margin-bottom:14px">Uanset om du er studerende, underviser eller censor — find ud af hvad der gælder for dig.</p>
+        <p style="font-size:13px;color:rgba(255,255,255,0.5);line-height:1.6">Prøv vores interaktive guide baseret på CBS' officielle retningslinjer — få et klart svar på under et minut.</p>
+      </div>
+      <div class="card-body" style="padding-top:24px">
+        <p style="font-size:13px;font-weight:500;color:var(--sub);margin-bottom:12px">Hvad er din rolle?</p>
         <div class="role-list">
           <button class="role-btn" onclick="setRole('studerende')">
             <span class="role-icon">🎓</span>
@@ -204,11 +208,12 @@ footer.on { display: block; }
             <span class="role-icon">📚</span>
             <div class="role-text">
               <div class="role-name">Underviser, vejleder eller bedømmer</div>
-              <div class="role-desc">Hvad skal jeg være opmærksom på?</div>
+              <div class="role-desc">Hvad skal jeg være opmærksom på i min rolle?</div>
             </div>
             <span class="role-arrow">›</span>
           </button>
         </div>
+        <p style="font-size:11px;color:var(--hint);margin-top:16px;text-align:center">Tager under 1 minut &nbsp;·&nbsp; Ingen login</p>
       </div>
     </div>
   </div>
