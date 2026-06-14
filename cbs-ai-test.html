@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CBS AI Test</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #F7F6F2;
+    --surface: #FFFFFF;
+    --border: rgba(0,0,0,0.08);
+    --border-strong: rgba(0,0,0,0.15);
+    --text: #1A1A18;
+    --muted: #6B6B66;
+    --hint: #A8A8A3;
+    --purple: #4B44C8;
+    --purple-light: #EEEDFE;
+    --purple-mid: #7F77DD;
+    --green: #1D9E75;
+    --green-light: #EAF3DE;
+    --green-dark: #27500A;
+    --amber: #BA7517;
+    --amber-light: #FAEEDA;
+    --amber-dark: #633806;
+    --red: #C0392B;
+    --red-light: #FCEBEB;
+    --red-dark: #791F1F;
+    --radius: 10px;
+    --radius-lg: 16px;
+    --radius-pill: 99px;
+  }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    padding: 0;
+  }
+
+  /* HEADER */
+  header {
+    background: var(--surface);
+    border-bottom: 0.5px solid var(--border);
+    padding: 0 2rem;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .logo {
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--purple);
+    letter-spacing: 0.04em;
+  }
+
+  .logo span {
+    color: var(--hint);
+  }
+
+  .header-badge {
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--muted);
+    background: var(--bg);
+    padding: 4px 10px;
+    border-radius: var(--radius-pill);
+    border: 0.5px solid var(--border-strong);
+    letter-spacing: 0.03em;
+  }
+
+  /* HERO */
+  .hero {
+    padding: 4rem 2rem 3rem;
+    max-width: 680px;
+    margin: 0 auto;
+  }
+
+  .hero-eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--purple);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+
+  .hero h1 {
+    font-size: clamp(28px, 5vw, 40px);
+    font-weight: 600;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.75rem;
+    color: var(--text);
+  }
+
+  .hero h1 em {
+    font-style: normal;
+    color: var(--purple);
+  }
+
+  .hero p {
+    font-size: 15px;
+    color: var(--muted);
+    line-height: 1.6;
+    max-width: 480px;
+  }
+
+  /* MAIN CARD */
+  .card {
+    background: var(--surface);
+    border: 0.5px solid var(--border);
+    border-radius: var(--radius-lg);
+    max-width: 680px;
+    margin: 0 auto 2rem;
+    overflow: hidden;
+  }
+
+  .card-section {
+    padding: 1.5rem 1.75rem;
+    border-bottom: 0.5px solid var(--border);
+  }
+
+  .card-section:last-child { border-bottom: none; }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 0.875rem;
+  }
+
+  .section-icon {
+    width: 22px;
+    height: 22px;
+    border-radius: 6px;
+    background: var(--purple-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .section-icon svg {
+    width: 13px;
+    height: 13px;
+    stroke: var(--purple);
+    fill: none;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .section-title {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--muted);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  /* CHIPS */
+  .chip-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 14px;
+    border-radius: var(--radius-pill);
+    border: 1px solid var(--border-strong);
+    background: var(--bg);
+    color: var(--text);
+    font-size: 13.5px;
+    font-weight: 400;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .chip:hover {
+    border-color: var(--purple-mid);
+    background: var(--purple-light);
+    color: var(--purple);
+  }
+
+  .chip .dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: currentColor;
+    opacity: 0;
+    transition: opacity 0.15s;
+    flex-shrink: 0;
+  }
+
+  .chip.selected .dot { opacity: 1; }
+
+  .chip.selected {
+    border-color: var(--purple);
+    background: var(--purple-light);
+    color: var(--purple);
+    font-weight: 500;
+  }
+
+  .chip.chip-warn.selected {
+    border-color: var(--amber);
+    background: var(--amber-light);
+    color: var(--amber-dark);
+  }
+
+  .chip.chip-warn.selected .dot { background: var(--amber); }
+
+  .chip.chip-stop {
+    border-style: dashed;
+  }
+
+  .chip.chip-stop.selected {
+    border-color: var(--red);
+    background: var(--red-light);
+    color: var(--red-dark);
+    border-style: solid;
+  }
+
+  .chip.chip-stop.selected .dot { background: var(--red); }
+
+  /* STEDPRØVE BANNER */
+  .alert {
+    display: none;
+    padding: 10px 14px;
+    border-radius: var(--radius);
+    font-size: 13px;
+    line-height: 1.5;
+    margin-top: 12px;
+    border: 1px solid;
+  }
+
+  .alert.show { display: block; }
+  .alert-red { background: var(--red-light); border-color: var(--red); color: var(--red-dark); }
+
+  .blocked {
+    opacity: 0.35;
+    pointer-events: none;
+    transition: opacity 0.3s;
+  }
+
+  /* RESULTS */
+  .results-section {
+    padding: 1.5rem 1.75rem;
+  }
+
+  .results-label {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--muted);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+
+  .results-empty {
+    font-size: 14px;
+    color: var(--hint);
+    padding: 0.5rem 0;
+  }
+
+  .result-cards { display: flex; flex-direction: column; gap: 10px; }
+
+  .result-card {
+    border-radius: var(--radius);
+    border: 1px solid;
+    overflow: hidden;
+    animation: slideIn 0.2s ease;
+  }
+
+  @keyframes slideIn {
+    from { opacity: 0; transform: translateY(4px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .result-card-header {
+    padding: 10px 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .result-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .result-card-title {
+    font-size: 13px;
+    font-weight: 600;
+    flex: 1;
+  }
+
+  .result-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    padding: 0 14px 10px;
+  }
+
+  .result-tag {
+    font-size: 11px;
+    font-weight: 500;
+    padding: 2px 8px;
+    border-radius: var(--radius-pill);
+  }
+
+  .result-body {
+    font-size: 13px;
+    line-height: 1.55;
+    padding: 0 14px 12px;
+  }
+
+  .result-body .item { margin-bottom: 6px; }
+  .result-body .item:last-child { margin-bottom: 0; }
+  .result-body strong { font-weight: 500; }
+
+  /* GREEN */
+  .result-green { background: var(--green-light); border-color: #3B6D11; }
+  .result-green .result-dot { background: var(--green); }
+  .result-green .result-card-title { color: var(--green-dark); }
+  .result-green .result-tag { background: #C0DD97; color: var(--green-dark); }
+  .result-green .result-body { color: #3B6D11; display: none; }
+
+  /* AMBER */
+  .result-amber { background: var(--amber-light); border-color: #854F0B; }
+  .result-amber .result-dot { background: var(--amber); }
+  .result-amber .result-card-title { color: var(--amber-dark); }
+  .result-amber .result-tag { background: #FAC775; color: var(--amber-dark); }
+  .result-amber .result-body { color: #854F0B; }
+
+  /* RED */
+  .result-red { background: var(--red-light); border-color: #A32D2D; }
+  .result-red .result-dot { background: var(--red); }
+  .result-red .result-card-title { color: var(--red-dark); }
+  .result-red .result-tag { background: #F7C1C1; color: var(--red-dark); }
+  .result-red .result-body { color: #791F1F; }
+
+  /* FOOTER */
+  footer {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 1.5rem 2rem 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .footer-left {
+    font-size: 12px;
+    color: var(--hint);
+    line-height: 1.5;
+  }
+
+  .footer-left a {
+    color: var(--purple);
+    text-decoration: none;
+  }
+
+  .footer-left a:hover { text-decoration: underline; }
+
+  .footer-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--hint);
+    flex-shrink: 0;
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 600px) {
+    .hero { padding: 2.5rem 1.25rem 2rem; }
+    .card { margin: 0 1rem 1.5rem; }
+    .card-section, .results-section { padding: 1.25rem; }
+    footer { padding: 1rem 1.25rem 2rem; flex-direction: column; align-items: flex-start; gap: 0.5rem; }
+    header { padding: 0 1.25rem; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { animation: none !important; transition: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">CBS <span>/</span> AI TEST</div>
+  <div class="header-badge">GenAI-retningslinjer 2025/26</div>
+</header>
+
+<main style="padding: 0 1rem;">
+
+  <div class="hero">
+    <div class="hero-eyebrow">CBS AI Society</div>
+    <h1>Må du bruge <em>GenAI</em><br>til din eksamen?</h1>
+    <p>Vælg alle de ting du vil bruge GenAI til — så får du et samlet overblik over hvad reglerne siger.</p>
+  </div>
+
+  <div class="card">
+
+    <!-- STEDPRØVE -->
+    <div class="card-section">
+      <div class="section-header">
+        <div class="section-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 9v4m0 4h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/></svg>
+        </div>
+        <span class="section-title">Eksamentype</span>
+      </div>
+      <div class="chip-grid">
+        <div class="chip chip-stop" id="chip-stedproeve" onclick="toggle('stedproeve')">
+          <span class="dot"></span>
+          Skriftlig stedprøve i lokalet
+        </div>
+      </div>
+      <div class="alert alert-red" id="alert-stedproeve">
+        GenAI er ikke tilladt ved skriftlige stedprøver — uanset om det er med eller uden hjælpemidler.
+      </div>
+    </div>
+
+    <!-- SKRIFTLIG -->
+    <div class="card-section" id="section-skriftlig">
+      <div class="section-header">
+        <div class="section-icon">
+          <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14,2 14,8 20,8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10,9 9,9 8,9"/></svg>
+        </div>
+        <span class="section-title">Skriftlig eksamen / aflevering</span>
+      </div>
+      <div class="chip-grid">
+        <div class="chip" id="chip-korrektur" onclick="toggle('korrektur')">
+          <span class="dot"></span>Stave- og grammatikkontrol
+        </div>
+        <div class="chip" id="chip-search" onclick="toggle('search')">
+          <span class="dot"></span>Søgemaskine / research
+        </div>
+        <div class="chip chip-warn" id="chip-ideer" onclick="toggle('ideer')">
+          <span class="dot"></span>Idéer og struktur
+        </div>
+        <div class="chip chip-warn" id="chip-output" onclick="toggle('output')">
+          <span class="dot"></span>Generere tekst eller billeder
+        </div>
+      </div>
+    </div>
+
+    <!-- MUNDTLIG -->
+    <div class="card-section" id="section-mundtlig">
+      <div class="section-header">
+        <div class="section-icon">
+          <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+        </div>
+        <span class="section-title">Mundtlig eksamen</span>
+      </div>
+      <div class="chip-grid">
+        <div class="chip" id="chip-sparring" onclick="toggle('sparring')">
+          <span class="dot"></span>Brainstorm / sparring
+        </div>
+        <div class="chip chip-warn" id="chip-slides" onclick="toggle('slides')">
+          <span class="dot"></span>Lave slides eller produkt
+        </div>
+        <div class="chip chip-stop" id="chip-live" onclick="toggle('live')">
+          <span class="dot"></span>Svar live under eksamen
+        </div>
+      </div>
+    </div>
+
+    <!-- RESULTS -->
+    <div class="results-section">
+      <div class="results-label">Dit overblik</div>
+      <div id="results"><div class="results-empty">Vælg en eller flere use cases ovenfor.</div></div>
+    </div>
+
+  </div>
+
+</main>
+
+<footer>
+  <div class="footer-left">
+    Baseret på CBS' officielle retningslinjer for GenAI i eksamen (2025/26).<br>
+    Tvivl? Kontakt <a href="https://library.cbs.dk" target="_blank">CBS Library</a> eller din studievejleder.
+  </div>
+  <div class="footer-tag">CBS AI Society</div>
+</footer>
+
+<script>
+const state = {};
+
+const rules = {
+  stedproeve: { color: 'red', title: 'Skriftlig stedprøve', body: 'Ikke tilladt. GenAI er forbudt ved alle skriftlige stedprøver i eksamenslokalet — uanset om det er med eller uden hjælpemidler.' },
+  korrektur:  { color: 'green', title: 'Korrekturlæsning', body: '' },
+  search:     { color: 'green', title: 'Søgemaskine / research', body: '' },
+  ideer:      { color: 'amber', title: 'Idéer og struktur', body: 'Angiv brugen i metodeafsnittet eller introduktionen — hvad du brugte det til og til hvilket formål.' },
+  output:     { color: 'amber', title: 'Generere tekst eller billeder', body: 'Kræver en specifik APA-reference for hvert stykke AI-genereret indhold i afleveringen. Ingen reference = brud på reglerne om akademisk redelighed.' },
+  sparring:   { color: 'green', title: 'Brainstorm / sparring', body: '' },
+  slides:     { color: 'amber', title: 'Slides eller produkt', body: 'Erklær din brug tydeligt — mundtligt under eksamen eller skriftligt i produktet (f.eks. en note på første slide).' },
+  live:       { color: 'red',   title: 'Svar live under eksamen', body: 'Ikke tilladt. GenAI må ikke generere dine svar under selve den mundtlige eksamen.' }
+};
+
+function toggle(id) {
+  state[id] = !state[id];
+  const chip = document.getElementById('chip-' + id);
+  chip.classList.toggle('selected', state[id]);
+
+  if (id === 'stedproeve') {
+    document.getElementById('alert-stedproeve').classList.toggle('show', state[id]);
+    document.getElementById('section-skriftlig').classList.toggle('blocked', state[id]);
+    document.getElementById('section-mundtlig').classList.toggle('blocked', state[id]);
+    if (state[id]) {
+      ['korrektur','search','ideer','output','sparring','slides','live'].forEach(k => {
+        state[k] = false;
+        document.getElementById('chip-' + k).classList.remove('selected');
+      });
+    }
+  }
+
+  render();
+}
+
+function render() {
+  const el = document.getElementById('results');
+  const active = Object.keys(state).filter(k => state[k] && k !== 'stedproeve');
+
+  if (!active.length && !state.stedproeve) {
+    el.innerHTML = '<div class="results-empty">Vælg en eller flere use cases ovenfor.</div>';
+    return;
+  }
+
+  const order = { red: 0, amber: 1, green: 2 };
+  const keys = state.stedproeve ? ['stedproeve'] : active;
+  keys.sort((a, b) => order[rules[a].color] - order[rules[b].color]);
+
+  const byColor = { red: [], amber: [], green: [] };
+  keys.forEach(k => byColor[rules[k].color].push(k));
+
+  const colorMeta = {
+    red:   { label: 'Ikke tilladt', cls: 'result-red' },
+    amber: { label: 'Deklaration kræves', cls: 'result-amber' },
+    green: { label: 'Ingen deklaration', cls: 'result-green' }
+  };
+
+  let html = '<div class="result-cards">';
+
+  ['red', 'amber', 'green'].forEach(color => {
+    const items = byColor[color];
+    if (!items.length) return;
+    const meta = colorMeta[color];
+
+    html += `<div class="result-card ${meta.cls}">`;
+    html += `<div class="result-card-header"><div class="result-dot"></div><div class="result-card-title">${meta.label}</div></div>`;
+    html += `<div class="result-tags">${items.map(k => `<span class="result-tag">${rules[k].title}</span>`).join('')}</div>`;
+
+    const withBody = items.filter(k => rules[k].body);
+    if (withBody.length) {
+      html += `<div class="result-body">`;
+      withBody.forEach(k => {
+        html += `<div class="item"><strong>${rules[k].title}:</strong> ${rules[k].body}</div>`;
+      });
+      html += `</div>`;
+    }
+
+    html += `</div>`;
+  });
+
+  html += '</div>';
+  el.innerHTML = html;
+}
+</script>
+</body>
+</html>
